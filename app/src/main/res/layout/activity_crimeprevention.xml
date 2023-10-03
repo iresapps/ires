@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".crimepreventionActivity">
+
+    <ViewFlipper
+        android:id="@+id/crime_flipper_view"
+        android:layout_width="match_parent"
+        android:layout_height="1000dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/crime_title" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/i" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/ii" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/iii" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/iv" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/v" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/vi" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/vii" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/viii" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/ix" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/x" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/xi" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/xii" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/xiii" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/xiv" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/xv" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/xvi" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/xvii" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/xviii" />
+    </ViewFlipper>
+
+
+    <ImageButton
+        android:id="@+id/prev_btn"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="previousV"
+        android:src="@drawable/prev"
+        android:text="Previous" />
+
+    <ImageButton
+        android:id="@+id/nextbtn"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="8dp"
+        android:adjustViewBounds="true"
+        android:onClick="nextV"
+        android:scaleType="centerCrop"
+        android:src="@drawable/next"
+        android:text="Next" />
+</RelativeLayout>
+
+
+

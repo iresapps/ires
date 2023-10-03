@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.ires">
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/icon"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/iconn"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Ires"
+        tools:targetApi="32">
+
+        <activity
+            android:name=".categorysignup"
+            android:exported="false" />
+        <activity android:name=".EmergencyActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListContactsActivity"
+            android:parentActivityName=".ContactActivity" />
+        <activity
+            android:name=".ContactActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignInActivity"
+            android:exported="false" />
+        <!--
+  <activity android:name=".MyReceiver"
+             android:exported="true"
+             tools:ignore="Instantiatable">
+        <intent-filter>
+             <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+         </intent-filter>
+         </activity>
+        -->
+        <activity
+            android:name=".crimepreventionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".first_aidActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fire_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".tipActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CallerLogsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service android:name=".LockService" />
+    </application>
+
+</manifest>

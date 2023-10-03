@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/ways"
+        android:title="Ways to prepare for a home fire"
+        />
+
+    <item
+        android:id="@+id/remember"
+        android:title="Remember these Do's and Don'ts"
+        />
+    <item
+        android:id="@+id/safeguard"
+        android:title="Safeguard your home"
+        />
+    <item
+        android:id="@+id/guard"
+        android:title="Guards against kitchen fires"
+        />
+
+    <item
+        android:id="@+id/todo"
+        android:title="What to do if a fire starts"
+        />
+    <item
+        android:id="@+id/steps"
+        android:title="Step to take immediately after a home fire"
+        />
+    <item
+        android:id="@+id/care"
+        android:title="After the fire"
+        />
+</menu>

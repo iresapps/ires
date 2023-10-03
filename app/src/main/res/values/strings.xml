@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">I-Res</string>
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_close">Drawer Close</string>
+    <string name="sign_up">Already have an account? <u> Sign In </u></string>
+    <string name="sign_in">Not registered yet! <u> Sign Up </u></string>
+    <string-array name="division_list">
+        <!-- <item>Kidapawan City Hospital</item>
+         <item>Kidapawan City Police</item>
+         <item>Kidapawan City BFP</item>-->
+        <item>Kidapawan City</item>
+
+    </string-array>
+    <string-array name="category">
+        <item>Select User</item>
+        <item>Responder</item>
+        <item>Caller</item>
+
+    </string-array>
+    <string-array name="count_times">
+        <item>1</item>
+        <item>3</item>
+        <item>5</item>
+        <item>8</item>
+        <item>10</item>
+    </string-array>
+
+    <string name="email">princessdelightdumalaog7@gmail.com</string>
+    <string name="call_type" />
+
+</resources>

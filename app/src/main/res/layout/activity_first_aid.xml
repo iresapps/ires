@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".first_aidActivity">
+
+
+    <ViewFlipper
+        android:id="@+id/first_aid_view"
+        android:layout_width="match_parent"
+        android:layout_height="1000dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/one" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/two" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/three" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/four" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/five" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/six" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/seven" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/eight" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/nine" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/ten" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/eleven" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/twelve" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/thirteen" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/fourteen" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/fifthteen" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/sexteen" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/seventeen" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/eighteen" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/nineteen" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/twenty" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/twentyone" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/twentytwo" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/twentythree" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/twentyfour" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/twentyfive" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/twentysix" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/twentyseven" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/twentyeight" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/twentyninw" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/thirty" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/throne" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/thtwo" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/thrthr" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:srcCompat="@drawable/thf" />
+    </ViewFlipper>
+
+
+    <ImageButton
+        android:id="@+id/prev_btn"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="8dp"
+        android:adjustViewBounds="true"
+        android:onClick="FpreviousView"
+        android:scaleType="centerCrop"
+        android:src="@drawable/prev"
+        android:text="Previous" />
+
+    <ImageButton
+        android:id="@+id/nextbtn"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="8dp"
+        android:adjustViewBounds="true"
+        android:onClick="FnextView"
+        android:scaleType="centerCrop"
+        android:src="@drawable/next"
+        android:text="Next" />
+</RelativeLayout>
+
+
