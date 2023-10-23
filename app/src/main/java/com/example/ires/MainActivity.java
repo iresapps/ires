@@ -30,6 +30,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.ires.firebase.FirebaseActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton tips, logs;
     private CardView emergencyCardView, contactsCardView, settingsCardView;
 
+    private Button btn_firebase;
+
     private FirebaseAuth mAuth;
     private DatabaseReference myRef, myRefName;
     private FirebaseDatabase database;
@@ -71,12 +74,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         // Initializes the firebase SDK connection
         FirebaseApp.initializeApp(this);
-
-
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        btn_firebase = findViewById(R.id.btnFireBase);
+        btn_firebase.setOnClickListener(v -> startActivity(
+                new Intent (MainActivity.this
+                , com.example.ires.firebase.FirebaseActivity.class))
+        );
 
         mAuth = FirebaseAuth.getInstance();
         tips = findViewById ( R.id.Tips );
@@ -230,15 +236,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.settingsCardView:
                 sendUserToSettingsActivity();
                 break;
-            case
-                    R.id.Tips:
+            case R.id.Tips:
                 startActivity(new Intent (MainActivity.this, tipActivity.class));
                 break;
 
-            case  R.id.Logs:
+            case R.id.Logs:
                 startActivity(new Intent (MainActivity.this, CallerLogsActivity.class));
                 break;
-
+            case R.id.btnFireBase:
+                startActivity(new Intent (MainActivity.this, FirebaseActivity.class));
+                break;
         }
     }
 

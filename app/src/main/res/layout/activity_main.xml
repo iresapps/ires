@@ -30,7 +30,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:weightSum="4">
+                android:weightSum="4"
+                android:contentDescription=""
+                >
+
+                <Button
+                    android:id="@+id/btnFireBase"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btnfirebase"
+                    android:contentDescription=""
+                    />
 
                 <ImageView
                     android:layout_width="313dp"
@@ -38,7 +48,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="50dp"
                     android:src="@drawable/emerrrr"
-
+                    android:contentDescription=""
                     />
 
                 <LinearLayout
@@ -179,6 +189,7 @@
 
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
+
             </LinearLayout>
 
         </FrameLayout>
