@@ -71,14 +71,7 @@ public class FireBaseConn {
     // @param number pass the incident_number from SendToDashboard method
     // sets the status if ongoing or dispatched
     private String SetIncident(int number){
-        switch ( number ){
-            case 1:
-                return Incidents.fire.name();
-            case 2:
-                return Incidents.crimes.name();
-            case 3:
-                return Incidents.medical_emergencies.name();
-        }
-        return "";
+        if(number < 1 || number > Incidents.values().length){ return ""; }
+        return Incidents.values()[number].name();
     }
 }

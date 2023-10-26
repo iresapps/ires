@@ -1,5 +1,6 @@
 package com.example.ires.firebase;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,6 +29,7 @@ import androidx.core.app.ActivityCompat;
 import static android.Manifest.permission.READ_PHONE_NUMBERS;
 import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.READ_SMS;
+import static android.app.PendingIntent.getActivity;
 
 import java.util.Calendar;
 
@@ -73,20 +75,11 @@ public class FirebaseActivity extends AppCompatActivity  {
 
             }
         });
+
         Bundle bundle = new Bundle();
         int selected = dropdown.getSelectedItemPosition() + 1;
-        switch (selected){
-            case 1:
-                bundle.putString("IncidentType", "001");
-                break;
-            case 2:
-                bundle.putString("IncidentType", "002");
-                break;
-            case 3:
-                bundle.putString("IncidentType", "003");
-                break;
-        }
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        bundle.putString("IncidentType", Incidents.values()[selected].name());
+        mFirebaseAnalytics.logEvent("Incident", bundle);
         // sends data on click
         submit.setOnClickListener(v -> conn.SendToDashboard(
                 selected

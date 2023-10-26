@@ -1,7 +1,13 @@
 package com.example.ires.firebase;
 
 public enum Incidents {
-    crimes,
-    fire,
-    medical_emergencies
+    fire(1),
+    crimes(2),
+    medical_emergencies(3);
+
+    public final int value;
+
+    Incidents(final int value) {
+        this.value = value;
+    }
 }
