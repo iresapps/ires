@@ -94,7 +94,7 @@ public class FirebaseActivity extends AppCompatActivity  {
             }
         });
         // sends data on click
-        int selected = dropdown.getSelectedItemPosition() + 1;
+        int selected = dropdown.getSelectedItemPosition();
         submit.setOnClickListener(v -> SubmitButton(conn, selected, mFirebaseAnalytics));
     }
     private void SubmitButton(FireBaseConn conn, int selected, FirebaseAnalytics mFirebaseAnalytics){
