@@ -1,7 +1,12 @@
 package com.example.ires.firebase;
 
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.telephony.SmsManager;
+import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -9,6 +14,8 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ires.EmergencyActivity;
+import com.example.ires.MainActivity;
 import com.example.ires.R;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -23,22 +30,32 @@ import android.telephony.TelephonyManager;
 import android.content.Context;
 
 import android.content.pm.PackageManager;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import static android.Manifest.permission.READ_PHONE_NUMBERS;
 import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.READ_SMS;
 import static android.app.PendingIntent.getActivity;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class FirebaseActivity extends AppCompatActivity  {
 
-    String currentUserId = FirebaseAuth.getInstance().getUid();
-    DatabaseReference database = FirebaseDatabase.getInstance().getReference().child(currentUserId);
-    String nameRef;
-    String numberRef;
+    private String currentUserId = FirebaseAuth.getInstance().getUid();
+    private DatabaseReference database = FirebaseDatabase.getInstance().getReference().child(currentUserId);
+    private String nameRef;
+    private String numberRef;
+    private String message;
+    private ArrayList<String> phonenumbers;
+    private String locationUrl = "http://www.google.com/maps/place/";
+    private static final int REQUEST_CODE = 101;
+    private static final int REQUEST_CODE_SMS = 0;
+    private static final int REQUEST_CALL = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +67,7 @@ public class FirebaseActivity extends AppCompatActivity  {
         //get the spinner from the xml.
         Spinner dropdown = findViewById(R.id.ddl_incidents);
         Button submit = findViewById(R.id.submit_firebase);
+        TextView emergencyContext = findViewById(R.id.txt_context);
         //create a list of items for the spinner.
         String[] items = new String[Incidents.values().length];
         int i = 0;
@@ -81,12 +99,94 @@ public class FirebaseActivity extends AppCompatActivity  {
         bundle.putString("IncidentType", Incidents.values()[selected].name());
         mFirebaseAnalytics.logEvent("Incident", bundle);
         // sends data on click
-        submit.setOnClickListener(v -> conn.SendToDashboard(
+        submit.setOnClickListener(v -> SubmitButton(conn, selected));
+    }
+    private void SubmitButton(FireBaseConn conn, int selected){
+        conn.SendToDashboard(
                 selected
                 , nameRef
                 , GetNumber()
-                , Calendar.getInstance())
-        );
+                , Calendar.getInstance());
+        startActivity(new Intent(FirebaseActivity.this, EmergencyActivity.class));
+        showEmergencyAlertDialog();
+    }
+    private void showEmergencyAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.emergency_alertdialog_template, null);
+        builder.setView(dialogView);
+        builder.setTitle("Emergency Detected!");
+        builder.setMessage("Do you wanna Call 911 and Send Message to your close ones?");
+        builder.setIcon(R.drawable.eme);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        final Button positive = dialogView.findViewById(R.id.positiveButton);
+        Button negative = dialogView.findViewById(R.id.negativeButton);
+
+        positive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Make an emergency call
+                Log.d("tag", message);
+                if(loadFunctionsFromSharedPreference("call"))
+                    callEmergency();
+                if(loadFunctionsFromSharedPreference("message"))
+                    sendMessages();
+
+                dialog.cancel();
+            }
+        });
+
+        negative.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+    }
+    public void callEmergency(){
+        if( ContextCompat.checkSelfPermission(FirebaseActivity.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(FirebaseActivity.this, new String[] { android.Manifest.permission.CALL_PHONE}, REQUEST_CALL);
+        }
+        //make call to 911
+
+        else{
+            String phoneNumber = "09214819524"; // Replace with the desired phone number
+
+            // Create an intent to start the CallerLogsActivity
+
+
+            //Ndrrmc NO.
+            // 09089217888
+            // 09700727933 te ann
+            //09706980888 dap
+            //  String dial = "tel:" + "09214819524";
+
+            //  startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
+
+        }
+    }
+    private boolean loadFunctionsFromSharedPreference(String key) {
+        SharedPreferences sharedPreferences = getSharedPreferences("function", MODE_PRIVATE);
+        return sharedPreferences.getBoolean(key, true);
+    }
+    private void sendMessages() {
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]
+                    { android.Manifest.permission.SEND_SMS}, REQUEST_CODE_SMS);
+        }
+
+        StringBuilder numbers = new StringBuilder();
+        for (String number: phonenumbers){
+            SmsManager smsManager = SmsManager.getDefault();
+            Log.d("mes", message);
+            Log.d("mes", locationUrl);
+            smsManager.sendTextMessage(number, null, message, null, null);
+
+
+            numbers.append(number).append("\n");
+        }
+        Toast.makeText(this, "Message sent to:\n" + numbers.toString(), Toast.LENGTH_SHORT).show();
     }
     // Function will run after click to button
     private String GetNumber() {

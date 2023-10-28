@@ -12,6 +12,8 @@ import java.util.Locale;
 public class FireBaseConn {
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     DateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss", Locale.US);
+    String incident;
+    String strDate;
     public void CheckDatabase() {
         if ( database == null ) {
             System.out.println ( "database is empty" );
@@ -31,8 +33,8 @@ public class FireBaseConn {
     public void SendToDashboard(int incident_number ,String sender_name
             , String sender_number, Calendar date_sent){
 
-        String incident = SetIncident (incident_number);
-        String strDate = dateFormat.format(date_sent.getTime());
+        incident = SetIncident (incident_number);
+        strDate = dateFormat.format(date_sent.getTime());
         // structure
         // date.incident_number.sender_name.(incident, number, content)
         database.child(strDate)
