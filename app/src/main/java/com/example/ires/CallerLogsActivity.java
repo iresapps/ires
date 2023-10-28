@@ -26,10 +26,7 @@ public class CallerLogsActivity extends Activity {
     private void loadCallLog(ListView callLogListView) {
         List<CallLogEntry> callLogEntries = new ArrayList<>();
         CallLogEntry callLogEntry = null;
-        List<String> callerNameEntries = new ArrayList<>();
         List<String> callerNumberEntries = new ArrayList<>();
-        callerNameEntries.add("John Luc");
-        callerNumberEntries.add("09098031481");
         // Query the call log and retrieve call details for calls made by your application
 //        String[] projection = {
 //                CallLog.Calls._ID,
@@ -69,12 +66,9 @@ public class CallerLogsActivity extends Activity {
 //        }
 
         // Create and set the adapter for the ListView
-//        CallLogAdapter adapter = new CallLogAdapter(this, callLogEntries);
-//        callLogListView.setAdapter(adapter);
         ArrayAdapter<String> NumberAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, callerNumberEntries);
-//        ArrayAdapter<String> NameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_2, callerNameEntries);
         callLogListView.setAdapter(NumberAdapter);
-//        callLogListView.setAdapter(NameAdapter);
+
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

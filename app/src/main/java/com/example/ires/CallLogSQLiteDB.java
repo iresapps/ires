@@ -21,12 +21,33 @@ public class CallLogSQLiteDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE " + USER_TABLE_NAME + " (" +
+        String quary = ("CREATE TABLE " + USER_TABLE_NAME + " (" +
                 USER_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 USER_COLUMN_NAME + " TEXT, " +
-                USER_COLUMN_NUMBER + " INTEGER" + ")");
+                USER_COLUMN_NUMBER + " TEXT" + ")");
+        sqLiteDatabase.execSQL(quary);
     }
+    public void addData(String name, String number){
+        // on below line we are creating a variable for
+        // our sqlite database and calling writable method
+        // as we are writing data in our database.
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        // on below line we are creating a
+        // variable for content values.
+        ContentValues values = new ContentValues();
+        // on below line we are passing all values
+        // along with its key and value pair.
+        values.put(DATABASE_NAME, name);
+        values.put(USER_COLUMN_NUMBER, number);
+
+        // after adding all values we are passing
+        // content values to our table
+        db.insert(USER_TABLE_NAME, null, values);
+        // at last we are closing our
+        // database after adding database.
+        db.close();
+    }
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + USER_TABLE_NAME);
