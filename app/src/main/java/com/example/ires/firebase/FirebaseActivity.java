@@ -93,15 +93,14 @@ public class FirebaseActivity extends AppCompatActivity  {
 
             }
         });
-
-        Bundle bundle = new Bundle();
+        // sends data on click
         int selected = dropdown.getSelectedItemPosition() + 1;
+        submit.setOnClickListener(v -> SubmitButton(conn, selected, mFirebaseAnalytics));
+    }
+    private void SubmitButton(FireBaseConn conn, int selected, FirebaseAnalytics mFirebaseAnalytics){
+        Bundle bundle = new Bundle();
         bundle.putString("IncidentType", Incidents.values()[selected].name());
         mFirebaseAnalytics.logEvent("Incident", bundle);
-        // sends data on click
-        submit.setOnClickListener(v -> SubmitButton(conn, selected));
-    }
-    private void SubmitButton(FireBaseConn conn, int selected){
         conn.SendToDashboard(
                 selected
                 , nameRef
