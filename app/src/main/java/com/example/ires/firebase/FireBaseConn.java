@@ -39,10 +39,10 @@ public class FireBaseConn {
         // date.incident_number.sender_name.(incident, number, content)
         database.child(strDate)
                 .child("incident number")
-                .setValue(String.valueOf(incident_number));
+                .setValue(String.valueOf(incident_number + 1));
 
         DatabaseReference localData = database.child(strDate)
-                .child(String.valueOf(incident_number))
+                .child(String.valueOf(incident_number+ 1))
                 .child(sender_name);
 
         localData.setValue(sender_name);
@@ -73,7 +73,7 @@ public class FireBaseConn {
     // @param number pass the incident_number from SendToDashboard method
     // sets the status if ongoing or dispatched
     private String SetIncident(int number){
-        if(number < 1 || number > Incidents.values().length){ return ""; }
+        if(number < 0 || number > Incidents.values().length - 1){ return ""; }
         return Incidents.values()[number].name();
     }
 }
