@@ -43,7 +43,7 @@ public class FireBaseConn {
                 .setValue(String.valueOf(incident_number + 1));
 
         DatabaseReference localData = database.child(strDate)
-                .child(String.valueOf(incident_number+ 1))
+                .child(String.valueOf(incident_number + 1))
                 .child(sender_name);
 
         localData.setValue(sender_name);
