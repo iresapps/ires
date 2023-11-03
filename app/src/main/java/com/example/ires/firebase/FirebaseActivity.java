@@ -62,27 +62,18 @@ public class FirebaseActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-
         setContentView(R.layout.firebaseviewer);
         FireBaseConn conn = new FireBaseConn();
+//        phonenumbers.add(database.child("phone").get().toString());
         //get the spinner from the xml.
-        Spinner dropdown = findViewById(R.id.ddl_incidents);
-        Button submit = findViewById(R.id.submit_firebase);
-        TextView emergencyContext = findViewById(R.id.txt_context);
-        //create a list of items for the spinner.
-        String[] items = new String[Incidents.values().length];
-        int i = 0;
-        for (Incidents c: Incidents.values()) {
-            items[i] = c.name();
-            i += 1;
-        }
-        //create an adapter to describe how the items are displayed, adapters are used in several places in android.
-        //There are multiple variations of this, but this is the basic variant.
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
-        //set the spinners adapter to the previously created one.
-        dropdown.setAdapter(adapter);
 
-        adapter.notifyDataSetChanged();
+        Button fireButton = findViewById(R.id.fire_btn);
+        fireButton.setText(Incidents.fire.name());
+        Button crimeButton = findViewById(R.id.crime_btn);
+        crimeButton.setText(Incidents.crimes.name());
+        Button medicalButton = findViewById(R.id.medical_btn);
+        medicalButton.setText(Incidents.medical_emergencies.name());
+        TextView emergencyContext = findViewById(R.id.txt_context);
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -94,28 +85,33 @@ public class FirebaseActivity extends AppCompatActivity  {
 
             }
         });
-        // sends data on click
-        int selected = dropdown.getSelectedItemPosition();
-        submit.setOnClickListener(v -> SubmitButton(conn, selected, mFirebaseAnalytics));
+
+        fireButton.setOnClickListener(v -> SubmitButton(conn, 0, mFirebaseAnalytics));
+        crimeButton.setOnClickListener(v -> SubmitButton(conn, 1, mFirebaseAnalytics));
+        medicalButton.setOnClickListener(v -> SubmitButton(conn, 2, mFirebaseAnalytics));
     }
     private void SubmitButton(FireBaseConn conn, int selected, FirebaseAnalytics mFirebaseAnalytics){
         Bundle bundle = new Bundle();
         bundle.putString("IncidentType", Incidents.values()[selected].name());
         mFirebaseAnalytics.logEvent("Incident", bundle);
-        Calendar tempTime = Calendar.getInstance();
-        Calendar setTime = tempTime;
+        Calendar setTime = Calendar.getInstance();
         if(setTime.get(Calendar.AM_PM) != Calendar.AM){
-            setTime.set(Calendar.HOUR_OF_DAY, 12 + setTime.getTime().getHours());
+            setTime.set(setTime.getTime().getYear()
+                    ,setTime.getTime().getMonth()
+                    ,setTime.getTime().getDay()
+                    ,12 + setTime.getTime().getHours()
+                    , setTime.getTime().getMinutes()
+                    , setTime.getTime().getSeconds());
         }
         conn.SendToDashboard(
                 selected
                 , nameRef
                 , GetNumber()
                 , setTime);
-        startActivity(new Intent(FirebaseActivity.this, EmergencyActivity.class));
         CallerLogsActivity caller = new CallerLogsActivity();
         caller.setCallLogs(this);
         showEmergencyAlertDialog();
+        startActivity(new Intent(FirebaseActivity.this, EmergencyActivity.class));
     }
     private void showEmergencyAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

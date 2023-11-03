@@ -19,14 +19,6 @@
 
         </include>
 
-        <Spinner
-            android:id="@+id/ddl_incidents"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:spinnerMode="dropdown"
-            android:visibility="visible"
-            tools:visibility="visible" />
-
         <TextView
             android:id="@+id/txt_context"
             android:layout_width="match_parent"
@@ -37,18 +29,31 @@
             android:id="@+id/editTextTextMultiLine2"
             android:layout_width="400dp"
             android:layout_height="50dp"
+            android:autofillHints="name"
+            android:contentDescription=""
             android:ems="10"
             android:gravity="start|top"
             android:inputType="textMultiLine"
-            android:contentDescription=""
-            android:autofillHints="name"
             android:labelFor="@id/editTextTextMultiLine2"
-            android:text="@string/context"/>
+            android:text="@string/context" />
 
         <Button
-            android:id="@+id/submit_firebase"
-            android:layout_width="wrap_content"
+            android:id="@+id/fire_btn"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/submit" />
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/crime_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/medical_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
