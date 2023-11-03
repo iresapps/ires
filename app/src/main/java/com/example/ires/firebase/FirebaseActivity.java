@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ires.CallerLogsActivity;
 import com.example.ires.EmergencyActivity;
 import com.example.ires.MainActivity;
 import com.example.ires.R;
@@ -101,12 +102,19 @@ public class FirebaseActivity extends AppCompatActivity  {
         Bundle bundle = new Bundle();
         bundle.putString("IncidentType", Incidents.values()[selected].name());
         mFirebaseAnalytics.logEvent("Incident", bundle);
+        Calendar tempTime = Calendar.getInstance();
+        Calendar setTime = tempTime;
+        if(setTime.get(Calendar.AM_PM) != Calendar.AM){
+            setTime.set(Calendar.HOUR_OF_DAY, 12 + setTime.getTime().getHours());
+        }
         conn.SendToDashboard(
                 selected
                 , nameRef
                 , GetNumber()
-                , Calendar.getInstance());
+                , setTime);
         startActivity(new Intent(FirebaseActivity.this, EmergencyActivity.class));
+        CallerLogsActivity caller = new CallerLogsActivity();
+        caller.setCallLogs(this);
         showEmergencyAlertDialog();
     }
     private void showEmergencyAlertDialog() {
