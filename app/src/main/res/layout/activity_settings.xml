@@ -13,14 +13,13 @@
     </include>
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="6"
-        android:layout_height="match_parent">
+        android:weightSum="2">
 
-      <!--  <de.hdodenhof.circleimageview.CircleImageView
+        <!--  <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profileImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -31,58 +30,97 @@
             -->
 
         <LinearLayout
-            android:layout_weight="1"
             android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:weightSum="5"
-            android:layout_height="0dp">
+            android:weightSum="10">
 
             <LinearLayout
-                android:layout_width="487dp"
-                android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
                 android:layout_marginTop="10dp"
-                android:layout_weight="3">
+                android:layout_weight="1">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:paddingLeft="20dp"
                     android:text="Name:"
                     android:textColor="@android:color/black"
                     android:textSize="25dp" />
 
-                <TextView
-                    android:id="@+id/nameTextView"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/NameTextBox"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="35dp" />
+                    android:ems="10"
+                    android:inputType="text"
+                    android:text="Name" />
+
             </LinearLayout>
 
-            <TextView
-                android:layout_weight="2"
-                android:id="@+id/changenameTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
                 android:layout_marginTop="10dp"
-                android:text="Change name"
-                android:textColor="@android:color/black"
-                android:textIsSelectable="false"
-                android:textSize="15dp" />
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/userNumberTextView"
+                    android:layout_width="28dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="Number:"
+                    android:textColor="#EE000000"
+                    android:textSize="24sp" />
+
+                <EditText
+                    android:id="@+id/PhoneTextBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="phone" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/changeName_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#00FFFFFF"
+                    android:text="Change Name"
+                    android:textColor="#000000" />
+
+                <Button
+                    android:id="@+id/changeUserNum_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#00FFFFFF"
+                    android:text="Change number"
+                    android:textColor="#000000" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
 
-
-
         <LinearLayout
-            android:layout_weight="5"
             android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:weightSum="7"
-            android:layout_height="0dp">
+            android:weightSum="5">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -96,28 +134,27 @@
                 android:textSize="30dp" />
 
             <ListView
-                android:layout_weight="5.3"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:dividerHeight="10dp"
-                android:divider="@null"
                 android:id="@+id/phoneListView"
                 android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:layout_height="0dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="3"
+                android:divider="@null"
+                android:dividerHeight="10dp">
 
             </ListView>
 
             <TextView
-                android:layout_weight="0.4"
                 android:id="@+id/addnumberTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:text="Add phone number"
-                android:textSize="15dp"
                 android:layout_gravity="center"
-                android:textIsSelectable="false"
+                android:layout_weight="0.4"
+                android:text="Add phone number"
                 android:textColor="@android:color/black"
-                />
+                android:textIsSelectable="false"
+                android:textSize="15dp" />
         </LinearLayout>
     </LinearLayout>
 
