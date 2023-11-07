@@ -108,10 +108,10 @@ public class FirebaseActivity extends AppCompatActivity  {
                 , nameRef
                 , GetNumber()
                 , setTime);
+        startActivity(new Intent(FirebaseActivity.this, EmergencyActivity.class));
         CallerLogsActivity caller = new CallerLogsActivity();
         caller.setCallLogs(this);
         showEmergencyAlertDialog();
-        startActivity(new Intent(FirebaseActivity.this, EmergencyActivity.class));
     }
     private void showEmergencyAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
