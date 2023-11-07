@@ -3,7 +3,6 @@ package com.example.ires;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -48,7 +47,7 @@ public class SettingsActivity extends AppCompatActivity {
     private ListView phoneListView;
     private ArrayList<String> phonenumbers;
     private Toolbar toolbar;
-    private TextView nameTextView, changenameTextView, addnumberTextView;
+    private TextView nameTextBox, addnumberTextView;
     private AlertDialog.Builder alertdialog;
     private Vibrator vibrator;
 
@@ -57,6 +56,31 @@ public class SettingsActivity extends AppCompatActivity {
     private DatabaseReference myRef, myRefName;
     private Dialog dialog;
 
+    public void ChangeOnClick() {
+        dialog = new Dialog(SettingsActivity.this);
+        dialog.setContentView(R.layout.dialog_template);
+        final EditText dialogEditText = dialog.findViewById(R.id.dialogEditText);
+        Button dialogButton = dialog.findViewById(R.id.dialogButton);
+        dialogEditText.setEnabled(true);
+        dialogButton.setEnabled(true);
+        dialog.show();
+        dialogEditText.setHint("Change name");
+        dialogButton.setText("Set");
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = dialogEditText.getText().toString();
+                if (name.isEmpty()) {
+                    dialogEditText.setError("Enter your name");
+                    dialogEditText.requestFocus();
+                }
+                else{
+                    myRefName.setValue(name);
+                    dialog.cancel();
+                }
+            }
+        });
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +95,13 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        // Collect phone number
+        TextView userNumber = findViewById(R.id.userNumberTextView);
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.User), Context.MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPref.edit();
+        myEdit.putString("UserNumber", userNumber.getText().toString());
+
         database = FirebaseDatabase.getInstance();
         currentUserId = FirebaseAuth.getInstance().getUid();
 
@@ -79,10 +110,8 @@ public class SettingsActivity extends AppCompatActivity {
         myRefName = database.getReference(currentUserId).child("name");
         myRefName.keepSynced(true);
 
-
-        changenameTextView = findViewById(R.id.changenameTextView);
-        changenameTextView.setPaintFlags(changenameTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);       //for underlining text
-        nameTextView = findViewById(R.id.nameTextView);
+        Button changeNamebtn = findViewById(R.id.changeName_btn);
+        nameTextBox = findViewById(R.id.NameTextBox);
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         updateNumbers();
@@ -92,35 +121,7 @@ public class SettingsActivity extends AppCompatActivity {
         addnumberTextView = findViewById(R.id.addnumberTextView);
         addnumberTextView.setPaintFlags(addnumberTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-        changenameTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog = new Dialog(SettingsActivity.this);
-                dialog.setContentView(R.layout.dialog_template);
-                final EditText dialogEditText = dialog.findViewById(R.id.dialogEditText);
-                Button dialogButton = dialog.findViewById(R.id.dialogButton);
-                dialogEditText.setEnabled(true);
-                dialogButton.setEnabled(true);
-                dialog.show();
-                dialogEditText.setHint("Change name");
-                dialogButton.setText("Set");
-                dialogButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String name = dialogEditText.getText().toString();
-                        if (name.isEmpty()) {
-                            dialogEditText.setError("Enter your name");
-                            dialogEditText.requestFocus();
-                        }
-                        else{
-                            myRefName.setValue(name);
-                            dialog.cancel();
-                        }
-                    }
-                });
-
-            }
-        });
+        changeNamebtn.setOnClickListener(v -> { ChangeOnClick(); });
 
         addnumberTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -330,7 +331,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.getValue(String.class);
-                nameTextView.setText(name);
+                nameTextBox.setText(name);
             }
 
             @Override

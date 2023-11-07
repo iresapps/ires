@@ -31,4 +31,5 @@
     <string name="btnfirebase">Firebase button</string>
     <string name="submit">Submit</string>
     <string name="context">Context</string>
+    <string name="User">User</string>
 </resources>
