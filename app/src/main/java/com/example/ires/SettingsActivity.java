@@ -55,6 +55,9 @@ public class SettingsActivity extends AppCompatActivity {
     private String currentUserId, numberDel;
     private DatabaseReference myRef, myRefName;
     private Dialog dialog;
+    Context context = this;
+    SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.User), Context.MODE_PRIVATE);
+    SharedPreferences.Editor myEdit = sharedPref.edit();
 
     public void ChangeOnClick() {
         dialog = new Dialog(SettingsActivity.this);
@@ -81,6 +84,9 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
     }
+    private void UpdateUserNumber(String PhoneNumber){
+        myEdit.putString("UserNumber", PhoneNumber);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,12 +101,15 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        // Set Phone Number
+        TextView PhoneTextBox = findViewById(R.id.PhoneTextBox);
+        String userPhoneNum = PhoneTextBox.getText().toString();
+        PhoneTextBox.setText(sharedPref.getString("UserNumber", userPhoneNum));
+
         // Collect phone number
-        TextView userNumber = findViewById(R.id.userNumberTextView);
-        Context context = this;
-        SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.User), Context.MODE_PRIVATE);
-        SharedPreferences.Editor myEdit = sharedPref.edit();
-        myEdit.putString("UserNumber", userNumber.getText().toString());
+        Button UserPhoneNumber_btn = findViewById(R.id.changeUserNum_btn);
+        UserPhoneNumber_btn.setOnClickListener(v -> {UpdateUserNumber(userPhoneNum);});
+
 
         database = FirebaseDatabase.getInstance();
         currentUserId = FirebaseAuth.getInstance().getUid();
