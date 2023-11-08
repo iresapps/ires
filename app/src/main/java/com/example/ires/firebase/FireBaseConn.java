@@ -38,7 +38,7 @@ public class FireBaseConn {
         strDate = dateFormat.format(date_sent.getTime());
         // structure
         // date.incident_number.sender_name.(incident, number, content)
-        database.child(strDate)
+        database.child(strDate + (date_sent.get(Calendar.AM_PM) == Calendar.AM ? " AM":" PM"))
                 .child("incident number")
                 .setValue(String.valueOf(incident_number + 1));
 
