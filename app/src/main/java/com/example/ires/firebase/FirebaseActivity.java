@@ -108,6 +108,7 @@ public class FirebaseActivity extends AppCompatActivity  {
                 , nameRef
                 , GetNumber()
                 , setTime);
+
         startActivity(new Intent(FirebaseActivity.this, EmergencyActivity.class));
         CallerLogsActivity caller = new CallerLogsActivity();
         caller.setCallLogs(this);
@@ -193,22 +194,9 @@ public class FirebaseActivity extends AppCompatActivity  {
     }
     // Function will run after click to button
     private String GetNumber() {
-
-        if (ActivityCompat.checkSelfPermission(this, READ_SMS) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, READ_PHONE_NUMBERS) ==
-                        PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
-                READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
-            // Permission check
-
-            // Create obj of TelephonyManager and ask for current telephone service
-            TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-            numberRef = telephonyManager.getLine1Number();
-            return numberRef;
-        } else {
-            // Ask for permission
-            requestPermission();
-        }
-        return "";
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.User), Context.MODE_PRIVATE);
+        return  sharedPref.getString("UserNumber", "");
     }
 
     private void requestPermission()
