@@ -95,20 +95,12 @@ public class FirebaseActivity extends AppCompatActivity  {
         bundle.putString("IncidentType", Incidents.values()[selected].name());
         mFirebaseAnalytics.logEvent("Incident", bundle);
         Calendar setTime = Calendar.getInstance();
-        if(setTime.get(Calendar.AM_PM) != Calendar.AM){
-            setTime.set(setTime.getTime().getYear()
-                    ,setTime.getTime().getMonth()
-                    ,setTime.getTime().getDay()
-                    ,12 + setTime.getTime().getHours()
-                    , setTime.getTime().getMinutes()
-                    , setTime.getTime().getSeconds());
-        }
         conn.SendToDashboard(
                 selected
                 , nameRef
                 , GetNumber()
-                , setTime);
-
+                , setTime
+        );
         startActivity(new Intent(FirebaseActivity.this, EmergencyActivity.class));
         CallerLogsActivity caller = new CallerLogsActivity();
         caller.setCallLogs(this);
@@ -127,9 +119,7 @@ public class FirebaseActivity extends AppCompatActivity  {
         final Button positive = dialogView.findViewById(R.id.positiveButton);
         Button negative = dialogView.findViewById(R.id.negativeButton);
 
-        positive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        positive.setOnClickListener(v -> {
                 //Make an emergency call
                 Log.d("tag", message);
                 if(loadFunctionsFromSharedPreference("call"))
@@ -139,14 +129,9 @@ public class FirebaseActivity extends AppCompatActivity  {
 
                 dialog.cancel();
             }
-        });
+        );
 
-        negative.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
+        negative.setOnClickListener(v -> { dialog.cancel();} );
     }
     public void callEmergency(){
         if( ContextCompat.checkSelfPermission(FirebaseActivity.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
@@ -179,15 +164,12 @@ public class FirebaseActivity extends AppCompatActivity  {
             ActivityCompat.requestPermissions(this, new String[]
                     { android.Manifest.permission.SEND_SMS}, REQUEST_CODE_SMS);
         }
-
         StringBuilder numbers = new StringBuilder();
         for (String number: phonenumbers){
             SmsManager smsManager = SmsManager.getDefault();
             Log.d("mes", message);
             Log.d("mes", locationUrl);
             smsManager.sendTextMessage(number, null, message, null, null);
-
-
             numbers.append(number).append("\n");
         }
         Toast.makeText(this, "Message sent to:\n" + numbers.toString(), Toast.LENGTH_SHORT).show();
@@ -197,25 +179,5 @@ public class FirebaseActivity extends AppCompatActivity  {
         Context context = this;
         SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.User), Context.MODE_PRIVATE);
         return  sharedPref.getString("UserNumber", "");
-    }
-
-    private void requestPermission()
-    {
-            requestPermissions(new String[]{READ_SMS, READ_PHONE_NUMBERS, READ_PHONE_STATE}, 100);
-    }
-
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode != 100) {
-            throw new IllegalStateException("Unexpected value: " + requestCode);
-        }
-        TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, READ_SMS) !=
-                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
-                READ_PHONE_NUMBERS) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        numberRef = telephonyManager.getLine1Number();
     }
 }
