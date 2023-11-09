@@ -69,21 +69,18 @@ public class SettingsActivity extends AppCompatActivity {
         dialog.show();
         dialogEditText.setHint("Change name");
         dialogButton.setText("Set");
-        dialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String name = dialogEditText.getText().toString();
-                if (name.isEmpty()) {
-                    dialogEditText.setError("Enter your name");
-                    dialogEditText.requestFocus();
-                }
-                else{
-                    myRefName.setValue(name);
-                    dialog.cancel();
-                }
+        dialogButton.setOnClickListener( v -> {
+            String name = dialogEditText.getText().toString();
+            if (name.isEmpty()) {
+                dialogEditText.setError("Enter your name");
+                dialogEditText.requestFocus();
+            }
+            else{
+                myRefName.setValue(name);
+                dialog.cancel();
             }
         });
-    }
+    }Conn
     private void UpdateUserNumber(String PhoneNumber){
         myEdit.putString("UserNumber", PhoneNumber);
     }

@@ -34,7 +34,6 @@ public class FireBaseConn {
             , String sender_number, Calendar date_sent){
 
         incident = SetIncident (incident_number);
-        date_sent.set(Calendar.HOUR_OF_DAY, date_sent.getTime().getHours());
         strDate = dateFormat.format(date_sent.getTime());
         // structure
         // date.incident_number.sender_name.(incident, number, content)

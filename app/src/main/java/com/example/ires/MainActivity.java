@@ -275,7 +275,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 dialog.cancel();
             }
         });
-
         negative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
