@@ -3,6 +3,7 @@ package com.example.ires.firebase;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -52,7 +53,7 @@ public class FirebaseActivity extends AppCompatActivity  {
     private String nameRef;
     private String numberRef;
     private String message;
-    private ArrayList<String> phonenumbers;
+    private ArrayList<String> phonenumbers = null;
     private String locationUrl = "http://www.google.com/maps/place/";
     private static final int REQUEST_CODE = 101;
     private static final int REQUEST_CODE_SMS = 0;
@@ -64,7 +65,7 @@ public class FirebaseActivity extends AppCompatActivity  {
         FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         setContentView(R.layout.firebaseviewer);
         FireBaseConn conn = new FireBaseConn();
-//        phonenumbers.add(database.child("phone").get().toString());
+        phonenumbers.add(database.child("phone").get().toString());
         //get the spinner from the xml.
 
         Button fireButton = findViewById(R.id.fire_btn);
@@ -149,9 +150,9 @@ public class FirebaseActivity extends AppCompatActivity  {
             // 09089217888
             // 09700727933 te ann
             //09706980888 dap
-            //  String dial = "tel:" + "09214819524";
+              String dial = "tel:" + "09214819524";
 
-            //  startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
+              startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
 
         }
     }
@@ -161,8 +162,9 @@ public class FirebaseActivity extends AppCompatActivity  {
     }
     private void sendMessages() {
         if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, new String[]
-                    { android.Manifest.permission.SEND_SMS}, REQUEST_CODE_SMS);
+            ActivityCompat.requestPermissions(this
+                    , new String[]{android.Manifest.permission.SEND_SMS}
+                    , REQUEST_CODE_SMS);
         }
         StringBuilder numbers = new StringBuilder();
         for (String number: phonenumbers){

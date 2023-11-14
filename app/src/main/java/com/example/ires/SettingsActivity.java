@@ -80,7 +80,7 @@ public class SettingsActivity extends AppCompatActivity {
                 dialog.cancel();
             }
         });
-    }Conn
+    }
     private void UpdateUserNumber(String PhoneNumber){
         myEdit.putString("UserNumber", PhoneNumber);
     }

@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Paint;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -31,6 +32,7 @@ import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.ires.firebase.FirebaseActivity;
+import com.example.ires.firebase.LocalDashboard;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -239,7 +241,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.Tips:
                 startActivity(new Intent (MainActivity.this, tipActivity.class));
                 break;
-
             case R.id.Logs:
                 startActivity(new Intent (MainActivity.this, CallerLogsActivity.class));
                 break;
@@ -305,22 +306,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // 09089217888
             // 09700727933 te ann
             //09706980888 dap
-          //  String dial = "tel:" + "09214819524";
+            String dial = "tel:" + "09214819524";
 
-          //  startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
 
         }
     }
 
-
-
-
     private void sendMessages() {
         if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, new String[]
-                    { android.Manifest.permission.SEND_SMS}, REQUEST_CODE_SMS);
-        }
-
+            ActivityCompat.requestPermissions(this
+                    , new String[]{android.Manifest.permission.SEND_SMS}
+                    , REQUEST_CODE_SMS);
+            }
         StringBuilder numbers = new StringBuilder();
         for (String number: phonenumbers){
             SmsManager smsManager = SmsManager.getDefault();
@@ -401,6 +399,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.nav_about:
                 aboutDeveloper();
                 break;
+            case R.id.dashboard:
+                ShowDashboard();
+                break;
             case R.id.nav_logout:
                 mAuth.signOut();
                 sendUserToLoginActivity();
@@ -433,6 +434,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         dialog.show();
     }
+
+    private void ShowDashboard(){
+        Intent intent = new Intent(MainActivity.this, LocalDashboard.class);
+        startActivity(intent);
+    }
+
 
     private void fetchLastLocation() {
         Log.d("tag", "inside");
