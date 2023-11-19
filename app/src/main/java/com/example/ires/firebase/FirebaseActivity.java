@@ -52,8 +52,8 @@ public class FirebaseActivity extends AppCompatActivity  {
     private DatabaseReference database = FirebaseDatabase.getInstance().getReference().child(currentUserId);
     private String nameRef;
     private String numberRef;
-    private String message;
-    private ArrayList<String> phonenumbers = null;
+    private String message = database.child("name").get().toString() + " is in an EMERGENCY!\n";;
+    private ArrayList<String> phonenumbers = new ArrayList<>();
     private String locationUrl = "http://www.google.com/maps/place/";
     private static final int REQUEST_CODE = 101;
     private static final int REQUEST_CODE_SMS = 0;
@@ -67,7 +67,6 @@ public class FirebaseActivity extends AppCompatActivity  {
         FireBaseConn conn = new FireBaseConn();
         phonenumbers.add(database.child("phone").get().toString());
         //get the spinner from the xml.
-
         Button fireButton = findViewById(R.id.fire_btn);
         fireButton.setText(Incidents.fire.name());
         Button crimeButton = findViewById(R.id.crime_btn);
@@ -91,6 +90,8 @@ public class FirebaseActivity extends AppCompatActivity  {
         crimeButton.setOnClickListener(v -> SubmitButton(conn, 1, mFirebaseAnalytics));
         medicalButton.setOnClickListener(v -> SubmitButton(conn, 2, mFirebaseAnalytics));
     }
+
+
     private void SubmitButton(FireBaseConn conn, int selected, FirebaseAnalytics mFirebaseAnalytics){
         Bundle bundle = new Bundle();
         bundle.putString("IncidentType", Incidents.values()[selected].name());
@@ -104,8 +105,8 @@ public class FirebaseActivity extends AppCompatActivity  {
         );
         startActivity(new Intent(FirebaseActivity.this, EmergencyActivity.class));
         CallerLogsActivity caller = new CallerLogsActivity();
-        caller.setCallLogs(this);
         showEmergencyAlertDialog();
+        caller.setCallLogs(this);
     }
     private void showEmergencyAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -125,6 +126,7 @@ public class FirebaseActivity extends AppCompatActivity  {
                 Log.d("tag", message);
                 if(loadFunctionsFromSharedPreference("call"))
                     callEmergency();
+
                 if(loadFunctionsFromSharedPreference("message"))
                     sendMessages();
 
@@ -150,9 +152,10 @@ public class FirebaseActivity extends AppCompatActivity  {
             // 09089217888
             // 09700727933 te ann
             //09706980888 dap
-              String dial = "tel:" + "09214819524";
-
-              startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
+            String dial = "tel:" + phoneNumber;
+            Intent intent = new Intent(Intent.ACTION_CALL);
+            intent.setData(Uri.parse(dial));
+            startActivity(intent);
 
         }
     }
@@ -168,18 +171,20 @@ public class FirebaseActivity extends AppCompatActivity  {
         }
         StringBuilder numbers = new StringBuilder();
         for (String number: phonenumbers){
+//            Log.d("mes", number);
+//            Log.d("mes", message);
+//            Log.d("mes", locationUrl);
+
             SmsManager smsManager = SmsManager.getDefault();
-            Log.d("mes", message);
-            Log.d("mes", locationUrl);
-            smsManager.sendTextMessage(number, null, message, null, null);
-            numbers.append(number).append("\n");
+            smsManager.sendTextMessage(number.replaceAll(".$", ""), null, "message", null, null);
+            numbers.append(number.replaceAll(".$", ""));
         }
-        Toast.makeText(this, "Message sent to:\n" + numbers.toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Message sent to:\n" + numbers, Toast.LENGTH_SHORT).show();
     }
     // Function will run after click to button
     private String GetNumber() {
         Context context = this;
         SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.User), Context.MODE_PRIVATE);
-        return  sharedPref.getString("UserNumber", "");
+        return sharedPref.getString("UserNumber", "");
     }
 }

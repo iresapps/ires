@@ -306,9 +306,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // 09089217888
             // 09700727933 te ann
             //09706980888 dap
-            String dial = "tel:" + "09214819524";
-
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
+//            String dial = "tel:" + "09214819524";
+//
+//            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
 
         }
     }
@@ -399,9 +399,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.nav_about:
                 aboutDeveloper();
                 break;
-            case R.id.dashboard:
-                ShowDashboard();
-                break;
+//            case R.id.dashboard:
+//                ShowDashboard();
+//                break;
             case R.id.nav_logout:
                 mAuth.signOut();
                 sendUserToLoginActivity();
