@@ -33,6 +33,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.ires.firebase.FirebaseActivity;
 import com.example.ires.firebase.LocalDashboard;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -390,7 +391,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
         finish();
     }
-
+    // TODO: add system to click on dashboard
     private void menuItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.nav_settings:
@@ -399,14 +400,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.nav_about:
                 aboutDeveloper();
                 break;
-//            case R.id.dashboard:
-//                ShowDashboard();
-//                break;
+            case R.id.nav_dashboard:
+                SendToDashboard();
+                break;
             case R.id.nav_logout:
                 mAuth.signOut();
                 sendUserToLoginActivity();
                 break;
         }
+    }
+
+    private void SendToDashboard(){
+        Intent intent = new Intent(MainActivity.this, LocalDashboard.class);
+        startActivity(intent);
     }
 
     private void aboutDeveloper() {
@@ -434,12 +440,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         dialog.show();
     }
-
-    private void ShowDashboard(){
-        Intent intent = new Intent(MainActivity.this, LocalDashboard.class);
-        startActivity(intent);
-    }
-
 
     private void fetchLastLocation() {
         Log.d("tag", "inside");
