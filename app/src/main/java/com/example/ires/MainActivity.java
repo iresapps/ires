@@ -307,7 +307,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // 09700727933 te ann
             //09706980888 dap
 //            String dial = "tel:" + "09214819524";
-//
+
 //            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
 
         }

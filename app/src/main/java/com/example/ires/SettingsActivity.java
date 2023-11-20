@@ -45,19 +45,19 @@ import java.util.Arrays;
 public class SettingsActivity extends AppCompatActivity {
 
     private ListView phoneListView;
-    private ArrayList<String> phonenumbers;
+    private ArrayList<String> phonenumbers = new ArrayList<>();
     private Toolbar toolbar;
     private TextView nameTextBox, addnumberTextView;
     private AlertDialog.Builder alertdialog;
     private Vibrator vibrator;
 
-    private FirebaseDatabase database;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private String currentUserId, numberDel;
     private DatabaseReference myRef, myRefName;
     private Dialog dialog;
     Context context = this;
-    SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.User), Context.MODE_PRIVATE);
-    SharedPreferences.Editor myEdit = sharedPref.edit();
+//    SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.User), Context.MODE_PRIVATE);
+//    SharedPreferences.Editor myEdit = sharedPref.edit();
 
     public void ChangeOnClick() {
         dialog = new Dialog(SettingsActivity.this);
@@ -81,9 +81,9 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
     }
-    private void UpdateUserNumber(String PhoneNumber){
-        myEdit.putString("UserNumber", PhoneNumber);
-    }
+//    private void UpdateUserNumber(String PhoneNumber){
+//        myEdit.putString("UserNumber", PhoneNumber);
+//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,17 +98,17 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        // Set Phone Number
-        TextView PhoneTextBox = findViewById(R.id.PhoneTextBox);
-        String userPhoneNum = PhoneTextBox.getText().toString();
-        PhoneTextBox.setText(sharedPref.getString("UserNumber", userPhoneNum));
+//        // Set Phone Number
+//        TextView PhoneTextBox = findViewById(R.id.PhoneTextBox);
+//        String userPhoneNum = PhoneTextBox.getText().toString();
+//        if(userPhoneNum == null){userPhoneNum = " "; }
+//        PhoneTextBox.setText(sharedPref.getString("UserNumber", userPhoneNum));
+//
+//        // Collect phone number
+//        Button UserPhoneNumber_btn = findViewById(R.id.changeUserNum_btn);
+//        String finalUserPhoneNum = userPhoneNum;
+//        UserPhoneNumber_btn.setOnClickListener(v -> {UpdateUserNumber(finalUserPhoneNum);});
 
-        // Collect phone number
-        Button UserPhoneNumber_btn = findViewById(R.id.changeUserNum_btn);
-        UserPhoneNumber_btn.setOnClickListener(v -> {UpdateUserNumber(userPhoneNum);});
-
-
-        database = FirebaseDatabase.getInstance();
         currentUserId = FirebaseAuth.getInstance().getUid();
 
         myRef = database.getReference(currentUserId).child("phones");
@@ -129,46 +129,36 @@ public class SettingsActivity extends AppCompatActivity {
 
         changeNamebtn.setOnClickListener(v -> { ChangeOnClick(); });
 
-        addnumberTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog = new Dialog(SettingsActivity.this);
-                dialog.setContentView(R.layout.dialog_template);
-                final EditText dialogEditText = dialog.findViewById(R.id.dialogEditText);
-                Button dialogButton = dialog.findViewById(R.id.dialogButton);
-                dialogEditText.setEnabled(true);
-                dialogButton.setEnabled(true);
-                dialog.show();
-                dialogEditText.setHint("Add number");
-                dialogEditText.setInputType(InputType.TYPE_CLASS_PHONE);
-                dialogButton.setText("Add");
-                dialogButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String phone = dialogEditText.getText().toString().trim();
+        addnumberTextView.setOnClickListener(v -> {
+            dialog = new Dialog(SettingsActivity.this);
+            dialog.setContentView(R.layout.dialog_template);
+            final EditText dialogEditText = dialog.findViewById(R.id.dialogEditText);
+            Button dialogButton = dialog.findViewById(R.id.dialogButton);
+            dialogEditText.setEnabled(true);
+            dialogButton.setEnabled(true);
+            dialog.show();
+            dialogEditText.setHint("Add number");
+            dialogEditText.setInputType(InputType.TYPE_CLASS_PHONE);
+            dialogButton.setText("Add");
+            dialogButton.setOnClickListener(ve -> {
+                String phone = dialogEditText.getText().toString().trim();
 
-                        //Checking validity of number
-                        if (phone.isEmpty()) {
-                            dialogEditText.setError("Enter a phone number");
-                            dialogEditText.requestFocus();
-                        }
-                        else if (phone.length() != 11) {                            //for being safe
-                            dialogEditText.setError("Enter a valid phone number");
-                            dialogEditText.requestFocus();
-                        }
-                        else if (!Patterns.PHONE.matcher(phone).matches()) {
-                            dialogEditText.setError("Enter a valid phone number");
-                            dialogEditText.requestFocus();
-                        }
-                        else{
-                            //Valid
-                            myRef.push().setValue(phone);
-                            dialog.cancel();
-                        }
-
-                    }
-                });
-            }
+                //Checking validity of number
+                if (phone.isEmpty()) {
+                    dialogEditText.setError("Enter a phone number");
+                    dialogEditText.requestFocus();
+                } else if (phone.length() != 11) {                            //for being safe
+                    dialogEditText.setError("Enter a valid phone number");
+                    dialogEditText.requestFocus();
+                } else if (!Patterns.PHONE.matcher(phone).matches()) {
+                    dialogEditText.setError("Enter a valid phone number");
+                    dialogEditText.requestFocus();
+                } else {
+                    //Valid
+                    myRef.push().setValue(phone);
+                    dialog.cancel();
+                }
+            });
         });
 
 
@@ -207,36 +197,30 @@ public class SettingsActivity extends AppCompatActivity {
         Button delete = dialogView.findViewById(R.id.deleteButton);
 
         number.setText(numberDel);
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String updatedNumber = number.getText().toString().trim();
-                if(TextUtils.isEmpty(updatedNumber)) {
-                    number.setError("Enter a phone number");
-                    number.requestFocus();
-                }
-                else if (updatedNumber.length() != 11) {                            //for being safe
-                    number.setError("Enter a valid phone number");
-                    number.requestFocus();
-                }
-                else if (!Patterns.PHONE.matcher(updatedNumber).matches()) {
-                    number.setError("Enter a valid phone number");
-                    number.requestFocus();
-                }
-                else{
-                    //Valid
-                    deleteNumber();
-                    myRef.push().setValue(updatedNumber);
-                    dialog.cancel();
-                }
+        update.setOnClickListener(v -> {
+            String updatedNumber = number.getText().toString().trim();
+            if(TextUtils.isEmpty(updatedNumber)) {
+                number.setError("Enter a phone number");
+                number.requestFocus();
             }
-        });
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            else if (updatedNumber.length() != 11) {                            //for being safe
+                number.setError("Enter a valid phone number");
+                number.requestFocus();
+            }
+            else if (!Patterns.PHONE.matcher(updatedNumber).matches()) {
+                number.setError("Enter a valid phone number");
+                number.requestFocus();
+            }
+            else{
+                //Valid
                 deleteNumber();
+                myRef.push().setValue(updatedNumber);
                 dialog.cancel();
             }
+        });
+        delete.setOnClickListener(v-> {
+            deleteNumber();
+            dialog.cancel();
         });
     }
 
@@ -293,14 +277,11 @@ public class SettingsActivity extends AppCompatActivity {
             call.setChecked(loadFunctionsFromSharedPreference("call"));
             message.setChecked(loadFunctionsFromSharedPreference("message"));
 
-            saveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    saveTimeOnSharedPreferences(Integer.parseInt(countSpinner.getSelectedItem().toString()));
-                    saveFunctionsOnSharedPreference("call", call.isChecked());
-                    saveFunctionsOnSharedPreference("message", message.isChecked());
-                    dialog.cancel();
-                }
+            saveButton.setOnClickListener(v -> {
+                saveTimeOnSharedPreferences(Integer.parseInt(countSpinner.getSelectedItem().toString()));
+                saveFunctionsOnSharedPreference("call", call.isChecked());
+                saveFunctionsOnSharedPreference("message", message.isChecked());
+                dialog.cancel();
             });
 
 
@@ -353,10 +334,6 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void updateNumbers() {
-
-        phonenumbers = new ArrayList<String>();
-
-
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
