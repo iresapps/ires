@@ -80,6 +80,9 @@
             android:name=".CallerLogsActivity"
             android:exported="false" />
         <activity
+            android:name=".firebase.LocalDashboard"
+            android:exported="false" />
+        <activity
             android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>

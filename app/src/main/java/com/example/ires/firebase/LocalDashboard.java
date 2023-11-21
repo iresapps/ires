@@ -22,10 +22,15 @@ public class LocalDashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        DatabaseReference myTableRef = FirebaseDatabase.getInstance().getReference().child("incidents table");
+        DatabaseReference myTableRef = database.child("incidents table");
+
+        ArrayList<String> incidentNumberList = new ArrayList<>();
+        incidentNumberList.add(myTableRef.child("incident number").get().toString());
 
         List<dashboardUtils> dataObjects = new ArrayList<>();
+        dataObjects.add(new dashboardUtils(incidentNumberList.get(0),"","","",""));
         DashboardAdapter adapter = new DashboardAdapter(this, dataObjects);
-        ListView listView = findViewById(R.id.dashboardListView);
+        ListView listView = findViewById(R.id.dashboard_listview);
+
     }
 }

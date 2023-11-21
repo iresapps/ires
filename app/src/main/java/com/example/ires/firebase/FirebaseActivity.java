@@ -8,16 +8,13 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ires.CallerLogsActivity;
 import com.example.ires.EmergencyActivity;
-import com.example.ires.MainActivity;
 import com.example.ires.R;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -28,7 +25,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import android.telephony.TelephonyManager;
 import android.content.Context;
 
 import android.content.pm.PackageManager;
@@ -38,9 +34,6 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import static android.Manifest.permission.READ_PHONE_NUMBERS;
-import static android.Manifest.permission.READ_PHONE_STATE;
-import static android.Manifest.permission.READ_SMS;
 import static android.app.PendingIntent.getActivity;
 
 import java.util.ArrayList;
@@ -53,7 +46,7 @@ public class FirebaseActivity extends AppCompatActivity  {
     private String nameRef;
     private String numberRef;
     private String message = database.child("name").get().toString() + " is in an EMERGENCY!\n";;
-    private ArrayList<String> phonenumbers = new ArrayList<>();
+    private final ArrayList<String> phoneNumbers = new ArrayList<>();
     private String locationUrl = "http://www.google.com/maps/place/";
     private static final int REQUEST_CODE = 101;
     private static final int REQUEST_CODE_SMS = 0;
@@ -65,7 +58,7 @@ public class FirebaseActivity extends AppCompatActivity  {
         FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         setContentView(R.layout.firebaseviewer);
         FireBaseConn conn = new FireBaseConn();
-        phonenumbers.add(database.child("phone").get().toString());
+        phoneNumbers.add(database.child("phone").get().toString());
         //get the spinner from the xml.
         Button fireButton = findViewById(R.id.fire_btn);
         fireButton.setText(Incidents.fire.name());
@@ -163,6 +156,7 @@ public class FirebaseActivity extends AppCompatActivity  {
         SharedPreferences sharedPreferences = getSharedPreferences("function", MODE_PRIVATE);
         return sharedPreferences.getBoolean(key, true);
     }
+    // TODO: fix messaging system
     private void sendMessages() {
         if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this
@@ -170,7 +164,7 @@ public class FirebaseActivity extends AppCompatActivity  {
                     , REQUEST_CODE_SMS);
         }
         StringBuilder numbers = new StringBuilder();
-        for (String number: phonenumbers){
+        for (String number: phoneNumbers){
 //            Log.d("mes", number);
 //            Log.d("mes", message);
 //            Log.d("mes", locationUrl);
