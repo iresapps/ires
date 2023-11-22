@@ -12,7 +12,7 @@ import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.CallLog;
-import android.telephony.gsm.SmsManager;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -76,7 +76,8 @@ public class EmergencyActivity extends AppCompatActivity {
         myRef = database.getReference(currentUserId).child("phones");
         myRefName = database.getReference(currentUserId).child("name");
 
-        updateNumbers();
+//        updateNumbers();
+//        initializeEmergencyContacts();
         createMessage();
 
         count = loadTimeFromSharedPreferences();
@@ -159,17 +160,35 @@ public class EmergencyActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]
                     {Manifest.permission.SEND_SMS}, REQUEST_CODE_SMS);
         }
-
         StringBuilder numbers = new StringBuilder();
         for (String number: phonenumbers){
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(number, null, message, null, null);
+//            Log.d("mes", number);
+//            Log.d("mes", message);
+//            Log.d("mes", locationUrl);
 
-            numbers.append(number).append("\n");
+            android.telephony.SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(number, null, "message", null, null);
+            numbers.append(number + "\n");
         }
-        Toast.makeText(this, "Message sent to:\n" + numbers.toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Message sent to:\n" + numbers, Toast.LENGTH_SHORT).show();
     }
+    private void initializeEmergencyContacts(){
+        DatabaseReference numberReference = FirebaseDatabase.getInstance().getReference().child(currentUserId).child("numbers");
+        numberReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@androidx.annotation.NonNull DataSnapshot snapshot) {
+                phonenumbers.clear();
+                for (DataSnapshot snap:snapshot.getChildren()) {
+                    phonenumbers.add(snap.getValue().toString());
+                }
+            }
 
+            @Override
+            public void onCancelled(@androidx.annotation.NonNull DatabaseError error) {
+
+            }
+        });
+    }
     public void callEmergency() {
         String phoneNumber = "09214819524";
         makeCall(phoneNumber);

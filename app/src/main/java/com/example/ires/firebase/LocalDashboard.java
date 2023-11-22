@@ -55,13 +55,18 @@ public class LocalDashboard extends AppCompatActivity {
 //        listView.setAdapter(adapter);
     }
     private void initializeListView(){
-        database.addListenerForSingleValueEvent(new ValueEventListener() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dataList);
+        // below line is used for setting
+        // an adapter to our list view.
+        listView.setAdapter(adapter);
+        database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot snap:snapshot.getChildren()) {
-//                    String value = snap.getValue(String.class);
-//                    dataList.add(value);
-//                }
+                dataList.clear();
+                for (DataSnapshot snap: snapshot.getChildren()) {
+                    dataList.add(snap.getValue().toString());
+                }
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -69,9 +74,5 @@ public class LocalDashboard extends AppCompatActivity {
 
             }
         });
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dataList);
-        // below line is used for setting
-        // an adapter to our list view.
-        listView.setAdapter(adapter);
     }
 }
