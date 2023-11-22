@@ -43,11 +43,8 @@ public class FireBaseConn {
                 .setValue(String.valueOf(incident_number + 1));
 
         DatabaseReference localData = database.child("incidents table")
-                .child(strDate + (date_sent.get(Calendar.AM_PM) == Calendar.AM ? " AM":" PM"))
-                .child(String.valueOf(incident_number + 1))
-                .child(sender_name);
-
-        localData.setValue(sender_name);
+                .child(strDate + (date_sent.get(Calendar.AM_PM) == Calendar.AM ? " AM":" PM"));
+        localData.child("name").setValue(sender_name);
         localData.child("incident").setValue(incident);
         localData.child("number").setValue(sender_number);
 //        localData.child("content").setValue(content);
