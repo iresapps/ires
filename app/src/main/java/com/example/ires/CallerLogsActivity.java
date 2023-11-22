@@ -113,7 +113,7 @@ public class CallerLogsActivity extends Activity {
         editor.commit();
     }
     private void getCallLogs(ListView callLogListView) {
-        ArrayAdapter<String> logAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, callLogsBuffer);
+        ArrayAdapter<String> logAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, callLogsBuffer);
         callLogListView.setAdapter(logAdapter);
     }
 
