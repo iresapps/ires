@@ -58,7 +58,7 @@ public class FirebaseActivity extends AppCompatActivity  {
         FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         setContentView(R.layout.firebaseviewer);
         FireBaseConn conn = new FireBaseConn();
-        phoneNumbers.add(database.child("phone").get().toString());
+        initializeEmergencyContacts();
         //get the spinner from the xml.
         Button fireButton = findViewById(R.id.fire_btn);
         fireButton.setText(Incidents.fire.name());
@@ -120,8 +120,8 @@ public class FirebaseActivity extends AppCompatActivity  {
                 if(loadFunctionsFromSharedPreference("call"))
                     callEmergency();
 
-                if(loadFunctionsFromSharedPreference("message"))
-                    sendMessages();
+//                if(loadFunctionsFromSharedPreference("message"))
+                sendMessages();
 
                 dialog.cancel();
             }
@@ -170,15 +170,32 @@ public class FirebaseActivity extends AppCompatActivity  {
 //            Log.d("mes", locationUrl);
 
             SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(number.replaceAll(".$", ""), null, "message", null, null);
-            numbers.append(number.replaceAll(".$", ""));
+            smsManager.sendTextMessage("+639308031481", null, "message", null, null);
+//            numbers.append(number.replaceAll(".$", ""));
         }
-        Toast.makeText(this, "Message sent to:\n" + numbers, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Message sent to:\n" + "09308031481" + "\n", Toast.LENGTH_SHORT).show();
     }
     // Function will run after click to button
     private String GetNumber() {
         Context context = this;
         SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.User), Context.MODE_PRIVATE);
         return sharedPref.getString("UserNumber", "");
+    }
+    private void initializeEmergencyContacts(){
+        DatabaseReference numberReference = database.child("numbers");
+        numberReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                phoneNumbers.clear();
+                for (DataSnapshot snap:snapshot.getChildren()) {
+                    phoneNumbers.add(snap.getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
