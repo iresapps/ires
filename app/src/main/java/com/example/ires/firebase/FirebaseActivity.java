@@ -119,9 +119,9 @@ public class FirebaseActivity extends AppCompatActivity  {
                 Log.d("tag", message);
                 if(loadFunctionsFromSharedPreference("call"))
                     callEmergency();
-
-//                if(loadFunctionsFromSharedPreference("message"))
-                sendMessages();
+//
+                if(loadFunctionsFromSharedPreference("message"))
+                    sendMessages();
 
                 dialog.cancel();
             }
@@ -136,6 +136,8 @@ public class FirebaseActivity extends AppCompatActivity  {
         //make call to 911
 
         else{
+
+
             String phoneNumber = "09214819524"; // Replace with the desired phone number
 
             // Create an intent to start the CallerLogsActivity
