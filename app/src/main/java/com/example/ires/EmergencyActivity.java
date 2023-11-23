@@ -167,7 +167,7 @@ public class EmergencyActivity extends AppCompatActivity {
 //            Log.d("mes", locationUrl);
 
             android.telephony.SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(number, null, "message", null, null);
+            smsManager.sendTextMessage(number, null, message, null, null);
             numbers.append(number + "\n");
         }
         Toast.makeText(this, "Message sent to:\n" + numbers, Toast.LENGTH_SHORT).show();
